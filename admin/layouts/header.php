@@ -1,3 +1,21 @@
+
+<?php
+session_start();
+// $a  = $_SESSION['u_type'];
+// echo $a;die;
+  if(session_status()!== PHP_SESSION_ACTIVE){session_start();}
+  if (!isset($_SESSION['uid']))
+  {    
+  echo $_GLOBALS['message'] = '<h1 style="text-align: center; color: red;">Session Expired </h1> <h3 style="text-align: center; color: green;"><a href="../index.php">Login</a></h3>';
+
+    header("Cache-Control: no-cache, must-revalidate");
+    die();
+    exit;
+    }
+    ?>
+
+    
+    
 <!DOCTYPE html>
 <html>
 <head>

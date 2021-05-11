@@ -1,4 +1,15 @@
 
+
+<?php
+session_start();
+
+ 
+  if (isset($_SESSION['uid']))
+  {    
+  echo "<script>window.location.href='admin/index.php';</script>";
+    }
+    ?>
+
 <!DOCTYPE html> 
 <html> 
 <head>
@@ -86,6 +97,10 @@ $run=mysqli_query($con,$qry);
 if($num['u_id']!= "")
 
 {
+    $_SESSION['uid']=$num['u_id'];
+        $_SESSION['uname']=$num['u_id'];
+
+
 echo "<script>window.location.href='admin/index.php';</script>";
 
 }
