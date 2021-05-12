@@ -87,7 +87,7 @@ $run=mysqli_query($con,$qry);
                     <td><?php echo $c['c_status'] ?></td>
                     <td><?php echo $c['c_createdat'] ?></td>
                     <td>
-                     <a href="category_add.php?c_id=<?php echo $c['c_id'] ?>">View</a>
+                     <a href="category_add.php?c_id=<?php echo $c['c_id'] ?>">View</a> !  <a href="category_add.php?c_id_delete=<?php echo $c['c_id'] ?>">Delete</a> 
                     </td>
                   </tr>
                 <?php

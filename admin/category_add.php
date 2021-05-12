@@ -1,8 +1,28 @@
 <?php
+error_reporting(0);
+include('../connection/dbcon.php');
+
+if($_GET['c_id_delete']!="")
+{
+  $c_id=$_GET['c_id_delete'];
+$sql = "DELETE FROM `m_categories` WHERE `c_id`='$c_id' ";
+ $run = mysqli_query($con, $sql);
+ if($run){
+      echo '<script>alert("Category Deleted.");</script>';
+     echo "<script>window.location.href='category_viewall.php';</script>";
+
+     
+ }
+ else
+ {
+     echo '<script>alert("Category Not Deleted!!");</script>';
+     echo "<script>window.location.href='category_viewall.php';</script>";
+ }
+}
+
  if($_GET['c_id']!="")
  {
-  include('../connection/dbcon.php');
-
+  
 $c_id=$_GET['c_id'];
 $qry="SELECT * FROM `m_categories` WHERE `c_id`='$c_id' ";
   //echo $qry;die;
@@ -14,11 +34,15 @@ $run=mysqli_query($con,$qry);
 if($num['c_id']!= "")
 
 {
-foreach ($run as $row) {
-  # code...
+foreach ($run as $row) 
+{
+ $catagory_name=$row['c_name']; 
 }
 }
-
+ 
+ }else
+ {
+  $catagory_name=""; 
  }
 
 
@@ -72,7 +96,10 @@ include('layouts/sidebar.php');
                 <div class="card-body">
                   <div class="form-group">
                     <label for="exampleInput">Name</label>
-                    <input type="text" name="c_name" class="form-control" id="exampleInputEmail1" placeholder="Enter Name">
+                    <input required type="text" name="c_name" value="<?php if($catagory_name!=''){
+
+                      echo $catagory_name;
+                    } else { echo ''; }?>" class="form-control" id="exampleInputEmail1" placeholder="Enter Name">
                   </div>
                 
                   <!-- <div class="form-group">
@@ -139,11 +166,40 @@ if($num['c_id']!= "")
 }
 else
 {
+if($_GET['c_id']!="")
+{
+  $c_name=$_POST['c_name'];
+  $c_id=$_GET['c_id'];
+ $qry="UPDATE `m_categories` SET `c_name`='$c_name',`c_updatedat`=CURRENT_TIMESTAMP WHERE `c_id`=$c_id";
+
+ //echo $qry;die;
+
+$run=mysqli_query($con,$qry);
+ $num =  mysqli_affected_rows($con);
+           if($num>0)
+           {
+            ?>
+    <script>
+        alert(' Category Updated Successfully!!!!!!!');
+    </script>
+    <?php
+            }
+            else
+            {
+              ?>
+    <script>
+        alert(' Category Not Updated!!!!!!!');
+    </script>
+    <?php
+            }
+}
 
  $qry="INSERT INTO `m_categories`( `c_name`, `c_status`, `c_createdat`) VALUES ('$c_name','Active',CURRENT_TIMESTAMP)";
 
+ //echo $qry;die;
+
 $run=mysqli_query($con,$qry);
-// echo $row;die;
+
 if($run)
 
 {
@@ -154,7 +210,7 @@ if($run)
     <?php
 
 
-    echo "<script>window.location.href='category_view.php';</script>";
+    echo "<script>window.location.href='category_viewall.php';</script>";
 
 }
 else
