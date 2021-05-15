@@ -67,7 +67,7 @@ include('layouts/sidebar.php');
                     include('../connection/dbcon.php');
 
 
-$qry="SELECT * FROM `m_categories` WHERE `c_status`='Active' ";
+$qry="SELECT * FROM `m_categories` WHERE `c_status`='Active' order by c_id desc ";
   //echo $qry;die;
 
 
@@ -77,8 +77,6 @@ $run=mysqli_query($con,$qry);
  
  $cunt=1;
                  foreach($run as $c)
-                 {
-
                  
                     ?>
                     <tr>

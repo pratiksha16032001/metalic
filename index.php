@@ -320,6 +320,7 @@ if($num['u_id']!= "")
 {
     $_SESSION['uid']=$num['u_id'];
         $_SESSION['uname']=$num['u_id'];
+         $_SESSION['u_username']=$num['u_username'];
 
 
 echo "<script>window.location.href='admin/index.php';</script>";
