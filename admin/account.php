@@ -1,13 +1,14 @@
 <?php
+session_start();
 error_reporting(0);
+
 include('../connection/dbcon.php');
 
 
-
- if($_GET['u_id']!="")
+ if($_SESSION['uid']!="")
  {
   
-$u_id=$_GET['u_id'];
+$u_id=$_SESSION['uid'];
 $qry="SELECT * FROM `users` WHERE `u_id`='$u_id' ";
   //echo $qry;die;
 
@@ -61,12 +62,12 @@ include('layouts/sidebar.php');
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Product Form</h1>
+            <h1> My Account</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="../index.php">Home</a></li>
-              <li class="breadcrumb-item active">Product Form</li>
+              <li class="breadcrumb-item active"> My Account </li>
             </ol>
           </div>
         </div>
@@ -82,137 +83,59 @@ include('layouts/sidebar.php');
             <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Product </h3>
+                <h3 class="card-title">My Profile </h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
               <form role="form" method="post" enctype="multipart/form-data">
                 <div class="card-body">
-                  <div class="form-group">
-                    <label for="exampleInput">category</label>
-                  <select name="c_name" class="form-control" required>
-                      <option value="<?php if($c_name!=''){
-                      echo $c_name;
-                    } else { echo ''; }?> "><?php if($c_name!=''){
-                      echo $c_name;
-                    } else { echo 'Select category'; }?> </option>
-
-                   <!--  <option value="" disabled="" selected="">select Position</option>-->
-                  <?php
-                    error_reporting(0);
-                    include('../connection/dbcon.php');
-
-
-$qry="SELECT * FROM `m_categories` WHERE `c_status`='Active' order by c_id desc ";
-  //echo $qry;die;
-
-
-$run=mysqli_query($con,$qry);
-// echo $row;die;
-
- 
- $cunt=1;
-                 foreach($run as $c)
-                 {
-                    ?>
-
-                     <option value="<?php echo $c['c_id']; ?>"><?php echo $c['c_name']; ?></option>
-<?php   
-                 }
-                 ?>
-                  </select>
-                  </div>
+                  
                   <div class="form-group">
                     <label for="exampleInputFile">name</label>
                     <div class="input-group">
                       <div class="custom-file">
-                        <input type="text" name="prod_name" value="<?php if($prod_name!="") { echo $prod_name; } else { } ?>" class="form-control" id="exampleInputFile" required>                     </div>
+                        <input type="text" name="u_username" value="<?php if($u_username!="") { echo $u_username; } else { } ?>" class="form-control" id="exampleInputFile" required>                     </div>
                       </div>
               </div>
   <div class="form-group">
-                    <label for="exampleInputFile">tags</label>
+                    <label for="exampleInputFile">email</label>
                     <div class="input-group">
                       <div class="custom-file">
-                        <input type="text" name="prod_tags" value="<?php if($prod_tags!="") { echo $prod_tags; } else { } ?>" class="form-control" id="exampleInputFile" required>                     </div>
+                        <input type="text" name="u_email" value="<?php if($u_email!="") { echo $u_email; } else { } ?>" class="form-control" id="exampleInputFile" required>                     </div>
                       </div>
               </div>
                <div class="form-group">
-                    <label for="exampleInputFile">description</label>
+                    <label for="exampleInputFile">address</label>
                     <div class="input-group">
                       <div class="custom-file">
-                        <textarea  name="prod_description" value="<?php if($prod_description!="") { echo $prod_description; } else { } ?>" class="form-control" required>
-                          <?php if($prod_description!="") { echo $prod_description; } else { } ?>
+                        <textarea  name="u_address" value="<?php if($u_address!="") { echo $u_address; } else { } ?>" class="form-control" required>
+                          <?php if($u_address!="") { echo $u_address; } else { } ?>
                         </textarea>
                                              </div>
                       </div>
-              </div>
+              </div>    
 
-                
-                  <div class="form-group">
-                    <label for="exampleInputFile">imageone</label>
+              <div class="form-group">
+                    <label for="exampleInputFile">contact</label>
                     <div class="input-group">
                       <div class="custom-file">
-                        <input type="file" name="prod_imageone" style="width: 250px;" class="form-control" id="exampleInputFile" >
-                        <input type="hidden" name="h_prod_imageone" value="<?php echo $prod_imageone; ?>">
-                       
-                        <img src="product_images/<?php echo $prod_imageone; ?>" style="height: 129px; width: 300px; float:right;">
- </div>
-                     
-                    </div>
-                  </div>
-<div class="form-group">
-                    <label for="exampleInputFile">imagetwo</label>
+                        <textarea  name="u_contact" value="<?php if($u_contact!="") { echo $u_contact; } else { } ?>" class="form-control" required>
+                          <?php if($u_contact!="") { echo $u_contact; } else { } ?>
+                        </textarea>
+                                             </div>
+                      </div>
+              </div>   
+
+              <div class="form-group">
+                    <label for="exampleInputFile">gender</label>
                     <div class="input-group">
                       <div class="custom-file">
-                        <input type="file" name="prod_imagetwo" style="width: 250px;" class="form-control" id="exampleInputFile" >
-                        <input type="hidden" name="h_prod_imagetwo" value="<?php echo $prod_imagetwo; ?>">
-                       
-                        <img src="product_images/<?php echo $prod_imagetwo; ?>" style="height: 129px; width: 300px; float:right;">
- </div>
-                     
-                    </div>
-                  </div><div class="form-group">
-                    <label for="exampleInputFile">imagethree</label>
-                    <div class="input-group">
-                      <div class="custom-file">
-                        <input type="file" name="prod_imagethree" style="width: 250px;" class="form-control" id="exampleInputFile">
-                        <input type="hidden" name="h_prod_imagethree" value="<?php echo $prod_imagethree; ?>">
-                       
-                        <img src="product_images/<?php echo $prod_imagethree; ?>" style="height: 129px; width: 300px; float:right;">
- </div>
-                     
-                    </div>
-                  </div><div class="form-group">
-                    <label for="exampleInputFile">imagefour</label>
-                    <div class="input-group">
-                      <div class="custom-file">
-                        <input type="file" name="prod_imagefour" style="width: 250px;" class="form-control" id="exampleInputFile">
-                        <input type="hidden" name="h_prod_imagefour" value="<?php echo $prod_imagefour; ?>">
-                       
-                        <img src="product_images/<?php echo $prod_imagefour; ?>" style="height: 129px; width: 300px; float:right;">
- </div>
-                     
-                    </div>
-                  </div><div class="form-group">
-                    <label for="exampleInputFile">imagefive</label>
-                    <div class="input-group">
-                      <div class="custom-file">
-                        <input type="file" name="prod_imagefive" style="width: 250px;" class="form-control" id="exampleInputFile">
-                        <input type="hidden" name="h_prod_imagefive" value="<?php echo $prod_imagefive; ?>">
-                       
-                        <img src="product_images/<?php echo $prod_imagefive; ?>" style="height: 129px; width: 300px; float:right;">
- </div>
-                     
-                    </div>
-                  </div>
+                        Male <input type="radio" name="u_gender" value="MALE" <?php if($u_gender=="MALE"){ echo "checked"; } else { } ?>>
+                        Female <input type="radio" name="u_gender" value="FEMALE" <?php if($u_gender=="FEMALE"){ echo "checked"; } else { } ?>>
 
-
-
-
-
-
-
-                  
+                                             </div>
+                      </div>
+              </div>  
                 </div>
                 <!-- /.card-body -->
 
@@ -244,65 +167,19 @@ error_reporting(0);
 if(isset($_POST['submit']))
 {
  
-$prod_name=$_POST['prod_name'];
-$c_name=$_POST['c_name'];
-$prod_tags=$_POST['prod_tags'];
-$prod_description=$_POST['prod_description'];
+$u_username=$_POST['u_username'];
+$u_email=$_POST['u_email'];
+$u_contact=$_POST['u_contact'];
+$u_address=$_POST['u_address'];
+$u_gender=$_POST['u_gender'];
 
-
-
-if($_POST['h_prod_imageone']!="" && $_POST['h_prod_imagetwo']!="" &&  $_POST['h_prod_imagethree']!="" &&  $_POST['h_prod_imagefour']!="" &&  $_POST['h_prod_imagefive']!="" && $_FILES['prod_imageone']['name']=="" && $_FILES['prod_imagetwo']['name']=="" && $_FILES['prod_imagethree']['name']=="" && $_FILES['prod_imagefour']['name']=="" && $_FILES['prod_imagefive']['name']=="" )
-{
-  if($_GET['prod_id']!="")
-  {
-     $prod_imageone=$_POST['h_prod_imageone'];
-      $prod_imagetwo=$_POST['h_prod_imagetwo']; 
-      $h_prod_imagethree=$_POST['h_prod_imagethree'];
-   $prod_imagefour=$_POST['h_prod_imagefour'];
-    $prod_imagefive=$_POST['h_prod_imagefive'];
-
-  }
- else  
- {
-    ?>
-    <script>
-        alert(' product image required!!!!!!!');
-    </script>
-
-    <?php
- }
-}
-else
-{
-  $prod_imageone = $_FILES['prod_imageone']['name'];
-  $tempname = $_FILES['prod_imageone']['tmp_name'];
- move_uploaded_file($tempname,"product_images/$prod_imageone");
-
-
-$prod_imagetwo = $_FILES['prod_imagetwo']['name'];
-  $tempname = $_FILES['prod_imagetwo']['tmp_name'];
- move_uploaded_file($tempname,"product_images/$prod_imagetwo");
-
- $prod_imagethree = $_FILES['prod_imagethree']['name'];
-  $tempname = $_FILES['prod_imagethree']['tmp_name'];
- move_uploaded_file($tempname,"product_images/$prod_imagethree");
-
- $prod_imagefour = $_FILES['prod_imagefour']['name'];
-  $tempname = $_FILES['prod_imagefour']['tmp_name'];
- move_uploaded_file($tempname,"product_images/$prod_imagefour");
-
- $prod_imagefive = $_FILES['prod_imagefive']['name'];
-  $tempname = $_FILES['prod_imagefive']['tmp_name'];
- move_uploaded_file($tempname,"product_images/$prod_imagefive");
-
-}
-if($_GET['prod_id']!="")
+if($_SESSION['uid']!="")
 {
   
 
-  $prod_id=$_GET['prod_id'];
+  $u_id=$_SESSION['uid'];
 
- $qry="UPDATE `m_product` SET `prod_name`='$prod_name',`prod_cat_id`='$c_name',`prod_description`='$prod_description',`prod_tags`='$prod_tags',`prod_imageone`='$prod_imageone',`prod_imagetwo`='$prod_imagetwo',`prod_imagethree`='$prod_imagethree',`prod_imagefour`='$prod_imagefour',`prod_imagefive`='$prod_imagefive',`prod_status`='Active',`prod_createdat`=CURRENT_TIMESTAMP WHERE `prod_id`=$prod_id";
+ $qry="UPDATE `users` SET `u_username`='$u_username',`u_email`='$u_email',`u_contact`='$u_contact',`u_address`='$u_address',`u_gender`='$u_gender',`u_updatedat`=CURRENT_TIMESTAMP WHERE `u_id`=$u_id";
 
  //echo $qry;die;
 
@@ -312,17 +189,17 @@ $run=mysqli_query($con,$qry);
            {
             ?>
     <script>
-        alert(' product Updated Successfully!!!!!!!');
+        alert('Profile Updated Successfully!!!!!!!');
     </script>
 
     <?php
-     echo "<script>window.location.href='product_viewall.php';</script>";
+     echo "<script>window.location.href='index.php';</script>";
             }
             else
             {
               ?>
     <script>
-        alert(' product Not Updated!!!!!!!');
+        alert(' Profile Not Updated!!!!!!!');
     </script>
     <?php
             }
